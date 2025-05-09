@@ -182,14 +182,16 @@ body::-webkit-scrollbar-track{
     background-color: #f44336;
     color: #fff;
     cursor: pointer;
-    position: absolute;
+    position: sticky;
     top: 20px;
     right: 20px;
+    margin-left: auto;
     width: 30px;
     height: 30px;
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 10;
 }
 
 .recipe-close-btn:hover{
@@ -301,6 +303,6 @@ body::-webkit-scrollbar-track{
     }
     .recipe-rating{
         position: relative;
-        top: -10px;
+        top: -20px;
     }
 }
