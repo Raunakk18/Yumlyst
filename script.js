@@ -4,6 +4,8 @@ const recipeContainer = document.querySelector(".recipe-container");
 const recipeDetails = document.querySelector(".recipe-details");
 const recipeDetailsContent = document.querySelector(".recipe-details-content");
 const closeBtn = document.querySelector(".recipe-close-btn");
+const stars = document.querySelectorAll(".rating");
+const ratingMessage = document.getElementById("rating-message");
 
 
 const fetchRecipes = async(query)=>{
@@ -57,20 +59,82 @@ const fetchIngredients = (meal) => {
 const openRecipePopup = (meal) =>{
     recipeDetailsContent.innerHTML = `
         <h2 class ="recipeName">${meal.strMeal}</h2>
+        <button id="bookmarkBtn"><i class="fa-solid fa-bookmark"></i> Bookmark</button>
         <h3>Ingredients</h3>
         <ul class= "ingredientList">${fetchIngredients(meal)}</ul>
         <div class= "recipeInstructions">
             <h3>Instructions</h3>
             <p >${meal.strInstructions}</p>
         </div>
-        `
+       
+        `;
+    const bookmarkBtn = document.getElementById("bookmarkBtn");
+    bookmarkBtn.addEventListener("click", () => {
+        saveBookmark(meal);
+    })
 
     recipeDetailsContent.parentElement.style.display = "block";
+
+    const stars = document.querySelectorAll(".rating .star");
+    const rattingMessage = document.getElementById("rating-message");
+
+    stars.forEach( (star) =>{
+        star.addEventListener("click", () =>{
+            const rating = star.getAttribute("data-value");
+
+            stars.forEach((s) => s.classList.remove("active"));
+            for( let i=0; i<rating; i++){
+                stars[i].classList.add("active");
+            }
+            ratingMessage.innerText = `You rated this recipe ${rating} out of 5`;
+        })
+    })
 }
+
+function saveBookmark(meal){
+    const bookmarks = JSON.parse(localStorage.getItem("bookmarkedRecipes")) || [];
+
+
+    if (!bookmarks.find(item => item.idMeal === meal.idMeal)) {
+        bookmarks.push({
+          idMeal: meal.idMeal,
+          strMeal: meal.strMeal,
+          strMealThumb: meal.strMealThumb
+        });
+        localStorage.setItem("bookmarkedRecipes", JSON.stringify(bookmarks));
+        alert("Recipe bookmarked!");
+      } else {
+        alert("Recipe already bookmarked!");
+      }
+    }
 
 closeBtn.addEventListener("click", () => {
     recipeDetailsContent.parentElement.style.display = "none";
 })
+
+
+function showBookmarkedRecipes() {
+    const bookmarks = JSON.parse(localStorage.getItem("bookmarkedRecipes")) || [];
+    const container = document.getElementById("bookmarksContainer");
+    container.innerHTML = "";
+  
+    if (bookmarks.length === 0) {
+      container.innerHTML = "<p>No bookmarked recipes.</p>";
+      return;
+    }
+  
+    bookmarks.forEach(meal => {
+      const card = document.createElement("div");
+      card.className = "bookmark-card";
+      card.innerHTML = `
+        <img src="${meal.strMealThumb}" alt="${meal.strMeal}" />
+        <h4>${meal.strMeal}</h4>
+      `;
+      container.appendChild(card);
+    });
+  }
+  
+
 
 searchBtn.addEventListener("click", (e) => {
     e.preventDefault();
