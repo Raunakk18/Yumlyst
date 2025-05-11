@@ -307,8 +307,5 @@ body::-webkit-scrollbar-track{
     .recipe-rating{
         position: relative;
         top: -20px;
-        /* left: auto;
-        right: auto;
-        margin: auto; */
     }
 }
