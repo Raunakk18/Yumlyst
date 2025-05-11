@@ -271,6 +271,8 @@ body::-webkit-scrollbar-track{
     cursor: pointer;
     font-size: 1rem;
     transition: background-color 0.3s;
+    display: block;
+    /* margin: 20px auto; */
   }
   
   #bookmarkBtn:hover {
