@@ -284,6 +284,7 @@ body::-webkit-scrollbar-track{
     display: none;
   }
 
+  /* responsiveness */
 
 @media screen and (max-width:600px){
     header nav{
@@ -306,5 +307,8 @@ body::-webkit-scrollbar-track{
     .recipe-rating{
         position: relative;
         top: -20px;
+        /* left: auto;
+        right: auto;
+        margin: auto; */
     }
 }
