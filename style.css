@@ -308,4 +308,8 @@ body::-webkit-scrollbar-track{
         position: relative;
         top: -20px;
     }
+    .recipe-container h2{
+        font-size: 20px;
+        margin-top: 10px;
+    }
 }
